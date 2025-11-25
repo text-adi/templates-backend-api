@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"templates/internal/module/entity/repository"
+	"templates/internal/module/entity/service"
 	httpController "templates/internal/service/fiber/controller"
 
 	"go.uber.org/fx"
@@ -8,6 +10,8 @@ import (
 
 type Params struct {
 	fx.In
+
+	Service *service.Service
 }
 
 type Result struct {
@@ -18,10 +22,19 @@ type Result struct {
 
 func New(p Params) (Result, error) {
 	return Result{
-		Controller: NewController(),
+		Controller: NewController(*(p.Service)),
 	}, nil
 }
 
 var Module = fx.Module("entity",
-	fx.Provide(New),
+	// Controller -> Service -> Repository
+	fx.Provide(
+		New,
+	),
+	fx.Provide(
+		service.NewService,
+	),
+	fx.Provide(
+		repository.NewExampleRepository,
+	),
 )

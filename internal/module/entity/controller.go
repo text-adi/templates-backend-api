@@ -1,13 +1,19 @@
 package entity
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"templates/internal/module/entity/service"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 type Controller struct {
+	service service.Service
 }
 
-func NewController() *Controller {
-	return &Controller{}
+func NewController(s service.Service) *Controller {
+	return &Controller{service: s}
 }
+
 func (c *Controller) Register(app *fiber.App) {
 	app.Get("/", c.GetHelloWorld)
 }

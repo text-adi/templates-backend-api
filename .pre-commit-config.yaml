@@ -1,0 +1,17 @@
+repos:
+  - repo: local
+    hooks:
+      - id: hadolint
+        name: hadolint
+        language: docker_image
+        entry: hadolint/hadolint:latest-alpine hadolint
+        files: Dockerfile
+        types: ["dockerfile"]
+
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.7
+    hooks:
+      - id: actionlint-docker
+        types: ["file", "non-executable", "text", "yaml"]
+        files: ^.github/workflows
