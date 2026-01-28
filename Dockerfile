@@ -3,7 +3,7 @@ FROM golang:1.25-alpine3.22 AS build-base
 
 WORKDIR /code
 
-FROM alpine:3.20 AS base
+FROM alpine:3.20.9 AS base
 
 WORKDIR /usr/local/bin
 
